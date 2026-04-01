@@ -18,7 +18,8 @@ jobs:
       
       - name: Print current time
         run: date
-      
+        
+      # My first workflow trigger test
       - name: Print runner information
         run: |
           echo "Runner OS: ${{ runner.os }}"

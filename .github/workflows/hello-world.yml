@@ -18,7 +18,7 @@ jobs:
       
       - name: Print current time
         run: date
-        
+
       # My first workflow trigger test
       - name: Print runner information
         run: |
@@ -36,3 +36,10 @@ jobs:
       
       - name: Print success message
         run: echo "✅ Workflow completed successfully!"
+        
+      - name: Access secret
+        run: |
+          echo "Secret exists and has length: ${#TEST_SECRET}"
+          echo "Secret is masked in logs: ${{ secrets.TEST_SECRET }}"
+        env:
+          TEST_SECRET: ${{ secrets.TEST_SECRET }}

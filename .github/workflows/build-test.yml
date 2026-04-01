@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x, 18.x, 20.x]
     
     steps:
       - name: Checkout code
@@ -31,7 +31,7 @@ jobs:
           echo "Environment: ${{ env.NODE_ENV }}"
           echo "Log Level: ${{ env.LOG_LEVEL }}"
           echo "App Version: ${{ env.APP_VERSION }}"
-          
+
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:

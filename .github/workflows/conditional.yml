@@ -1,0 +1,41 @@
+name: Conditional Execution
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  conditional-deploy:
+    name: Conditional Deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Display branch info
+        run: |
+          echo "Current branch: ${{ github.ref }}"
+          echo "Is main branch: ${{ github.ref == 'refs/heads/main' }}"
+          echo "Is develop branch: ${{ github.ref == 'refs/heads/develop' }}"
+
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/develop'
+        run: echo "🚀 Deploying to staging environment..."
+
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/main'
+        run: echo "🚀 Deploying to production environment..."
+
+      - name: Skip deployment
+        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop'
+        run: echo "⏭️ Skipping deployment for branch: ${{ github.ref }}"
+
+      - name: Run tests on develop
+        if: github.ref == 'refs/heads/develop'
+        run: echo "🧪 Running extended tests on develop branch..."
+
+      - name: Security scan on main
+        if: github.ref == 'refs/heads/main'
+        run: echo "🔒 Running security scan before production deployment..."
